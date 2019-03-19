@@ -2,37 +2,22 @@
 waterLevel = 0
 
 function circularize(x)
-	return 1 - math.sqrt(1 - math.pow(x, 2))
-	--return -4.1 * math.pow(x, 3) + 5.3 * math.pow(x, 2) - 0.2 * x
+	return 1 - math.sqrt(1 - math.pow(x, 1.8))
 end
 
--- This is the main method that gets called to
--- find the height of the terrain at each point.
 function terrain(x, z)
+  local j = octNoise(x / 110, z / 110, 4)
 
-	-- First, we sample the noise with a scale factor of 100.
-	-- The global function `noise` returns a sampled Simplex
-	-- heightmap with values between 0 and 1.
-	local j = octNoise(x / 75, z / 75, 4)
-	local h = worley3(x / 400, z / 400, j) * 1.5
+  -- the first 2 values essentially translate to the radius of the creaters, smaller the number the bigger the creater
+	local h = worley3(x / 400, z / 400, j) * 1.45
 	if (h < 1) then
 		h = circularize(h)
-	else 
-		--[[local d = 0.4
-		if (h < 1 + d) then
-			h = 0.5 / d - circularize(h - d)
-		else
-			h = 0
-		end]]--
+	else
 		h = 1
 	end
-	
 
-	-- Then, we scale the resulting noise by 10, creating a
-	-- maximum elevation change of 10 blocks, and return it
-  -- back to the terrain generator.
   -- the value multplying h defines the height of the canyons
-	return h * 80 + octNoise(x / 100, z / 100, 5) * 40
+	return h * 100 + octNoise(x / 70, z / 70, 5) * 40
 end
 
 function tree(x, y, z)
