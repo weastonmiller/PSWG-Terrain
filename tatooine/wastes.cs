@@ -29,7 +29,7 @@ class TerrainGenerator
 		else
 			h = 1;
 		
-        return h * 80 + ProcNoise.OctaveNoise(x / 70, z / 70, 5) * 20;
+        return h * 80 + ProcNoise.OctaveNoise(x / 70, z / 70, 5) * 20 + 60;
     }
 	
 	private double Circularize(double x)
@@ -43,6 +43,6 @@ class TerrainGenerator
     /// <returns>A number between 0 and 255, inclusive</returns>
     public int GetWaterLevel()
     {
-        return 0;
+        return 60;
     }
 }
